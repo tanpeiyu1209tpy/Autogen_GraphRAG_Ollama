@@ -1,9 +1,11 @@
 
-encoding_model: cl100k_base
-skip_workflows: []
+encoding_model: cl100k_base # to use for tokenisation 
+skip_workflows: [] # to control does we need to skip any process flow, now is no (all executed)
+
+# main config (chat model
 llm:
   api_key: ${GRAPHRAG_API_KEY}
-  type: openai_chat # or azure_openai_chat
+  type: openai_chat # or azure_openai_chat (use openai format but local simulation cuz autogen required)
   model: mistral
   model_supports_json: true # recommended if this is available for your model.
   # max_tokens: 4000
@@ -25,6 +27,7 @@ parallelization:
 
 async_mode: threaded # or asyncio
 
+#word embedding (convert the tokens into numerical vector)
 embeddings:
   ## parallelization: override the global parallelization settings for embeddings
   async_mode: threaded # or asyncio
@@ -143,3 +146,10 @@ global_search:
   # map_max_tokens: 1000
   # reduce_max_tokens: 2000
   # concurrency: 32
+
+# Configure GraphRAG settings to support local models from Ollama
+# 1) input read .md file
+# 2) use nomic_embed_text to convert to vector
+# 3) build the index
+# 4) user ask
+# 5) mistral aanswer
